@@ -1,10 +1,6 @@
-
 " ###################
 " Plugin Installer via vim-plug 
 " (https://github.com/junegunn/vim-plug)
-" Install via:
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 " ###################
 "
 call plug#begin('~/.vim/plugged')
@@ -23,8 +19,8 @@ call plug#begin('~/.vim/plugged')
  " Install vimTeX
  Plug 'lervag/vimtex'
 
- " You Complete me
- Plug 'ycm-core/YouCompleteMe'
+" " You Complete me
+" Plug 'ycm-core/YouCompleteMe'
  
  " Lightline Plugin
  Plug 'itchyny/lightline.vim'
@@ -57,10 +53,12 @@ let g:lightline = {
       \ }
 
 
+
 " ----------
 " Wombat Color Scheme
 " ----------
 color wombat
+
 
 
 " ----------
@@ -71,7 +69,12 @@ color wombat
 autocmd! bufwritepost .vimrc source %
 
 " Relative line numbers
+set cursorline
+set number
 set relativenumber
+
+" Get colors and boldness correct for vim 8.x
+hi CursorLineNr   cterm=bold term=bold ctermfg=Yellow gui=bold guifg=Yellow
 
 " Set command line height to 2
 set cmdheight=2
@@ -104,3 +107,28 @@ set noswapfile
 set splitbelow
 set splitright
 
+" Shortcutting split navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" Use mouse for split resizing
+set mouse=n
+
+"---------------------
+" Plugin Settings
+"---------------------
+
+" NERDTree Settings
+"
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+" Start NERDTree and leave the cursor in it.
+autocmd VimEnter * NERDTree | wincmd p
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
